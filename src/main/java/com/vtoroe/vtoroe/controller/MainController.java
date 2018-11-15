@@ -1,8 +1,10 @@
 package com.vtoroe.vtoroe.controller;
 import com.vtoroe.vtoroe.domain.Message;
 
+import com.vtoroe.vtoroe.domain.Summ;
 import com.vtoroe.vtoroe.domain.User;
 import com.vtoroe.vtoroe.repos.MessageRepo;
+import com.vtoroe.vtoroe.repos.SummRepo;
 import com.vtoroe.vtoroe.repos.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -24,10 +26,35 @@ public class MainController {
     @Autowired
     private UserRepo userRepo;
 
+    @Autowired
+    private SummRepo summRepo;
+
     @GetMapping("/")
     public String greeting(Map<String, Object> model) {
         return "greeting";
     }
+
+    @PostMapping("/Summery")
+    public String add(@RequestParam String title,
+                      @RequestParam String descript,
+                      @RequestParam String number,
+                      @RequestParam String tags,
+                      @RequestParam String text,
+                      Map<String,Object> model){
+        Summ summ=new Summ(title,descript,number,tags,text);
+        summRepo.save(summ);
+        Iterable<Summ> summs = summRepo.findAll();
+        model.put("summeries",summs);
+        return "Summery";
+    }
+
+    @GetMapping ("/Summery")
+    public String summery(){
+        return "Summery";
+    }
+
+
+
 
     @GetMapping("/main")
     public String main(@RequestParam(required = false, defaultValue = "") String filter, Model model) {
@@ -65,7 +92,7 @@ public class MainController {
         for (int i = 0; i< idUsers.size(); i++){
             User user = userRepo.getOne(idUsers.get(i));
             if (authoresingUser.getId() == user.getId()) {
-                SecurityContextHolder.clearContext();
+                //SecurityContextHolder.clearContext();
                 settings="1";
             }
             if(user.isActive()==true){
@@ -83,7 +110,7 @@ public class MainController {
         for (int i = 0; i< idUsers.size(); i++){
             User user = userRepo.getOne(idUsers.get(i));
             if (authoresingUser.getId() == user.getId()) {
-                SecurityContextHolder.clearContext();
+               // SecurityContextHolder.clearContext();
                 settings="1";
             }
             if(user.isActive()==false){
@@ -101,7 +128,7 @@ public class MainController {
         for (int i = 0; i< idUsers.size(); i++){
             User user = userRepo.getOne(idUsers.get(i));
             if (authoresingUser.getId() == user.getId()) {
-                SecurityContextHolder.clearContext();
+                //SecurityContextHolder.clearContext();
                 settings="2";
             }
             userRepo.delete(user);

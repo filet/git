@@ -20,39 +20,42 @@ import java.util.stream.Collectors;
 public class UserController {
     @Autowired
     private UserRepo userRepo;
+
     @GetMapping
     public String userList(
             @AuthenticationPrincipal User user,
-            Model model){
+            Model model) {
         user.setDateLastSeen(new Date());
         userRepo.save(user);
-        model.addAttribute("users",userRepo.findAll());
+        model.addAttribute("users", userRepo.findAll());
 
         return "userList";
     }
-    @GetMapping("{user}")
-    public String userEditForm(@PathVariable User user,Model model){
 
-        model.addAttribute("user",user);
+    @GetMapping("{user}")
+    public String userEditForm(@PathVariable User user, Model model) {
+
+        model.addAttribute("user", user);
         model.addAttribute("roles", Rol.values());
 
         return "userEdit";
     }
-    @PostMapping
+
+   @PostMapping
     public String userSave(
             @RequestParam String username,
             @RequestParam Map<String, String> form,
             @RequestParam("userId") User user
-    ){
+    ) {
         user.setUsername(username);
-        Set<String> roles= Arrays.stream(Rol.values())
+        Set<String> roles = Arrays.stream(Rol.values())
                 .map(Rol::name)
                 .collect(Collectors.toSet());
 
         user.getRoles().clear();
 
-        for (String key:form.keySet()){
-            if(roles.contains(key)){
+        for (String key : form.keySet()) {
+            if (roles.contains(key)) {
                 user.getRoles().add(Rol.valueOf(key));
             }
         }
@@ -60,3 +63,5 @@ public class UserController {
         return "redirect:/user";
     }
 }
+
+

@@ -13,6 +13,12 @@
             <li class="nav-item">
                 <a class="nav-link" href="/user">User list </a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/Summery">Summery </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/UserPage">UserPage </a>
+            </li>
             </ul>
         <@l.logout/>
        </div>
