@@ -54,10 +54,10 @@ public class MainController {
     public String summery(){
         return "Summery";
     }
-    @GetMapping ("/User")
-    public String user(){
-        return "User";
-    }
+//    @GetMapping ("/User")
+//    public String user(){
+//        return "User";
+//    }
 
 
 

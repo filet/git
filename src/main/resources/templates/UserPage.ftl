@@ -4,14 +4,14 @@
 
 <@c.page>
 List of summeries
-
+<form action="/UserPage" method="post">
 <table class="table table-striped" id="table-set">
 
     <thead>
     <tr>
-        <th>
-            <button onclick="onClickBtnAllSummeries()">All</button>
-        </th>
+        <#--<th>-->
+            <#--<button onclick="onClickBtnAllSummeries()">All</button>-->
+        <#--</th>-->
         <th scope="col">Title</th>
         <th scope="col">Descript</th>
         <th scope="col">Number</th>
@@ -22,9 +22,9 @@ List of summeries
     <tbody>
     <#list summs as s>
     <tr>
-        <th>
-            <input type="checkbox" value="${s.id}">
-        </th>
+        <#--<th>-->
+            <#--<input type="checkbox" value="${s.id}">-->
+        <#--</th>-->
         <td><a href="/UserPage/${s.id}"><u>${s.title}</u></a></td>
         <td>${s.descript}</td>
         <td>${s.number}</td>
@@ -32,20 +32,20 @@ List of summeries
         <td>${s.text}</td>
     </tr>
     </#list>
-    <script>
-        function onClickBtnAllSummeries(){
-            $('body input:checkbox').prop('checked', true)
-        }
-        function getArrayIdSummeries(){
-            arrayIdSummeries = [];
+    <#--<script>-->
+        <#--function onClickBtnAllSummeries(){-->
+            <#--$('body input:checkbox').prop('checked', true)-->
+        <#--}-->
+        <#--function getArrayIdSummeries(){-->
+            <#--arrayIdSummeries = [];-->
 
-            $('input:checkbox:checked').each(function(){
-                arrayIdSummeries.push($(this).val());
-            });
+            <#--$('input:checkbox:checked').each(function(){-->
+                <#--arrayIdSummeries.push($(this).val());-->
+            <#--});-->
 
-            return arrayIdSummeries;
-        }
-    </script>
+            <#--return arrayIdSummeries;-->
+        <#--}-->
+    <#--</script>-->
     <#--<button onclick="onClickBtnDeleteSummeries()">Delete</button>-->
     <#--<script>-->
         <#--function onClickBtnDeleteSummeries(){-->
@@ -69,5 +69,5 @@ List of summeries
     <#--</script>-->
         </tbody>
 </table>
-
+</form>
 </@c.page>

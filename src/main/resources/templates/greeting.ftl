@@ -1,6 +1,7 @@
 <#import "parts/common.ftl" as c>
 
 <@c.page>
-<h5>Hello,guest</h5>
-<div>This is a simple clone off Twitter</div>
+<h4>Summeries</h4>
+<p></p>
+<div><a href="/UserPage">List of summeries</a></div>
 </@c.page>

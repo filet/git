@@ -3,6 +3,7 @@ import com.vtoroe.vtoroe.domain.Rol;
 import com.vtoroe.vtoroe.domain.User;
 import com.vtoroe.vtoroe.repos.SummRepo;
 import com.vtoroe.vtoroe.domain.Summ;
+import com.vtoroe.vtoroe.repos.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -19,6 +20,8 @@ import java.util.stream.Collectors;
 public class UserPageController {
     @Autowired
     private SummRepo summRepo;
+    @Autowired
+    private UserRepo userRepo;
 
     @GetMapping("/UserPage")
     public String UserPage(Summ summ, Model model) {
@@ -31,10 +34,16 @@ public class UserPageController {
     public String userForm(@PathVariable Summ summ, Model model) {
         Iterable<Summ> summs = summRepo.findAll();
         model.addAttribute("summs", summs);
+        return "Read";
+    }
+    @GetMapping("/UserPage/Page/{summ}")
+    public String userFormPage(@PathVariable Summ summ, Model model) {
+        Iterable<Summ> summs = summRepo.findAll();
+        model.addAttribute("summs", summs);
         return "SummeryEdit";
     }
 
-    @PostMapping("/UserPage")
+    @PostMapping("/UserPage/Page")
     public String summSave(
             @RequestParam String title,
             @RequestParam String descript,
@@ -44,13 +53,14 @@ public class UserPageController {
             @RequestParam Map<String, String> form,
             @RequestParam("summId") Summ summ
     ) {
+
         summ.setTitle(title);
         summ.setDescript(descript);
         summ.setNumber(number);
         summ.setTags(tags);
         summ.setText(text);
         summRepo.save(summ);
+
         return "redirect:/UserPage";
     }
 }
-

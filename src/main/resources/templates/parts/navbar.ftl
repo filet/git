@@ -7,23 +7,22 @@
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
-
             <form class="form-inline my-2">
-                <li class="nav-item">
-                <a class="nav-link" href="/">Home </a>
-            </li>
+
             <li class="nav-item">
                 <a class="nav-link" href="/user">User list </a>
             </li>
+
+                <li class="nav-item">
+                <a class="nav-link" href="/">Home </a>
+            </li>
+
             <li class="nav-item">
                 <a class="nav-link" href="/Summery">Summery </a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="/UserPage">UserPage </a>
             </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/User">User </a>
-                </li>
             <li>
                 <input type="search" class="form-control mr-sm-2" placeholder="Search" aria-label="Search" size="80%">
              <button type="submit" class="btn btn-outline-success my-2 my-sm-0">Search</button>

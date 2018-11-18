@@ -3,6 +3,7 @@ package com.vtoroe.vtoroe.controller;
 import com.vtoroe.vtoroe.domain.Rol;
 import com.vtoroe.vtoroe.domain.Summ;
 import com.vtoroe.vtoroe.domain.User;
+import com.vtoroe.vtoroe.repos.SummRepo;
 import com.vtoroe.vtoroe.repos.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -21,6 +22,8 @@ import java.util.stream.Collectors;
 public class UserController {
     @Autowired
     private UserRepo userRepo;
+     @Autowired
+     private SummRepo summRepo;
 
     @GetMapping
     public String userList(
@@ -42,8 +45,9 @@ public class UserController {
         return "userEdit";
     }
     @GetMapping("/User/{user}")
-    public String userForm(@PathVariable User user, Model model) {
-
+    public String userForm(@PathVariable User user, Summ summ, Model model) {
+        Iterable<Summ> summs=summRepo.findAll();
+        model.addAttribute("summs", summs);
         model.addAttribute("user", user);
         return "User";
     }
@@ -70,4 +74,3 @@ public class UserController {
         return "redirect:/user";
     }
 }
-

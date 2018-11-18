@@ -2,16 +2,24 @@
 <meta charset="utf-8">
 <@c.page>
 <#--<form action="/UserPage" method="post">-->
-<form action="/UserPage" method="post">
-    <input type="text" name="title" value="${summ.title}">
-    <button type="submit">Save</button>
-<#--<h3>${summ.title}</h3>-->
-<i><br><input type="text" name="descript" value="${summ.descript}">
-<br><input type="text" name="number" value="${summ.number}">
-    <br><input type="text" name="tags" value="${summ.tags}"></i>
-<p></p>
-    <input type="text" name="text" value="${summ.text}">
-    <input type="hidden" value="${summ.id}" name="summId">
+<form action="/UserPage/Page" method="post">
+    <p style="text-align: left"><button type="submit" class="btn btn-primary">Save</button></p>
+    <p></p>
+        <input class="form-control" type="text" name="title" value="${summ.title}" size="50%">
+    <#--<h3>${summ.title}</h3>-->
+    <i><br><input class="form-control" type="text" name="descript" value="${summ.descript}" size="50%">
+
+
+    <br><input class="form-control" type="text" name="number" value="${summ.number}" size="50%">
+
+    <br><input class="form-control" type="text" name="tags" value="${summ.tags}" size="50%"></i>
+    <p></p>
+    <div class="form-group">
+        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="text">${summ.text}</textarea>
+        <#--<input class="form-control" type="text" name="text" value="${summ.text}">-->
+    </div>
+    <#--<input type="text" name="text" value="${summ.text}" size="50%">-->
+    <input class="form-control" type="hidden" value="${summ.id}" name="summId" size="50%">
 </form>
     <#--<input type="hidden" value="${user.id}" name="userId">-->
     <#--<button type="submit">Save</button>-->
