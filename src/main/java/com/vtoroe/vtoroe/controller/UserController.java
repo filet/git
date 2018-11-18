@@ -1,6 +1,7 @@
 package com.vtoroe.vtoroe.controller;
 
 import com.vtoroe.vtoroe.domain.Rol;
+import com.vtoroe.vtoroe.domain.Summ;
 import com.vtoroe.vtoroe.domain.User;
 import com.vtoroe.vtoroe.repos.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,8 +41,14 @@ public class UserController {
 
         return "userEdit";
     }
+    @GetMapping("/User/{user}")
+    public String userForm(@PathVariable User user, Model model) {
 
-   @PostMapping
+        model.addAttribute("user", user);
+        return "User";
+    }
+
+    @PostMapping
     public String userSave(
             @RequestParam String username,
             @RequestParam Map<String, String> form,
@@ -63,5 +70,4 @@ public class UserController {
         return "redirect:/user";
     }
 }
-
 

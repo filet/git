@@ -10,13 +10,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.chrono.IsoChronology;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-
+import java.lang.Long;
 
 @Controller
 public class MainController {
@@ -52,7 +54,10 @@ public class MainController {
     public String summery(){
         return "Summery";
     }
-
+    @GetMapping ("/User")
+    public String user(){
+        return "User";
+    }
 
 
 
@@ -129,12 +134,26 @@ public class MainController {
             User user = userRepo.getOne(idUsers.get(i));
             if (authoresingUser.getId() == user.getId()) {
                 //SecurityContextHolder.clearContext();
-                settings="2";
+                settings="1";
             }
             userRepo.delete(user);
         }
         return settings;
         }
-
+//    @PostMapping("/deletesummeries")
+//    @ResponseBody
+//    public String updateDeleteSummmeries(@RequestBody List<Long> id,
+//                                         @AuthenticationPrincipal User authoresingSummeries) {
+//        String settings = "1";
+//        for (int i = 0; i< id.size(); i++){
+//            Summ summ = summRepo.findAll(id(i));
+//            if (authoresingSummeries.getId() == summ.getIdSumm()) {
+//                //SecurityContextHolder.clearContext();
+//                settings="2";
+//            }
+//            summRepo.delete(summ);
+//        }
+//        return settings;
+//    }
 }
 

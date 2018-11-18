@@ -27,7 +27,7 @@ List of users
         <th>
             <input type="checkbox" value="${user.id}">
         </th>
-        <td>${user.username}</td>
+        <td><u><a href="/user/User/${user.id}">${user.username}</a></u></td>
         <td><#list user.roles as role>${role}<#sep>, </#list></td>
         <td><a href="/user/${user.id}">edit</a></td>
         <td>${user.dateReg}</td>
@@ -61,7 +61,7 @@ List of users
                 contentType: "application/json",
                 type: 'post',
                 success: function(settings){
-                    if(settings=="main") {
+                    if(settings=="1") {
                         window.location.reload()
                     }else{
                         document.location.href = "http://localhost:8080/login?logout";
@@ -81,7 +81,7 @@ List of users
                 contentType: "application/json",
                 type: 'post',
                 success: function(settings){
-                    if (settings=="main") {
+                    if (settings=="1") {
                         window.location.reload();
                 } else {
                     document.location.href = "http://localhost:8080/login?logout";
@@ -101,7 +101,7 @@ List of users
                 contentType: "application/json",
                 type: 'post',
                 success: function(settings){
-                    if (settings=="main") {
+                    if (settings=="1") {
                         window.location.reload();
                     } else {
                         document.location.href = "http://localhost:8080/login?logout";

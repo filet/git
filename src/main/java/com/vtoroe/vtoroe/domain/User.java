@@ -63,7 +63,7 @@ public class User implements UserDetails {
     public void setDateReg(Date dateReg) {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy HH-mm-ss");
         this.DateReg=simpleDateFormat.format(dateReg);
-        }
+    }
 
     public String getDateLastSeen() {
         return DateLastSeen;
@@ -72,5 +72,5 @@ public class User implements UserDetails {
     public void setDateLastSeen(Date dateLastSeen) {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy HH-mm-ss");
         this.DateLastSeen=simpleDateFormat.format(dateLastSeen);
-        }
+    }
 }
