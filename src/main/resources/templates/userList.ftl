@@ -18,6 +18,7 @@ List of users
         <th scope="col">DateReg</th>
         <th scope="col">DateLastSeen</th>
         <th scope="col">Active</th>
+        <th scope="col">Post</th>
         <th></th>
     </tr>
     </thead>
@@ -33,6 +34,7 @@ List of users
         <td>${user.dateReg}</td>
         <td>${user.dateLastSeen}</td>
         <td>${user.active?c}</td>
+        <td>${user.email}</td>
     </tr>
     </#list>
     <script>

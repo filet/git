@@ -4,6 +4,9 @@
     <meta charset="utf-8">
 
 <@c.page>
+<script src="https://cdn.rawgit.com/toopay/bootstrap-markdown/master/js/bootstrap-markdown.js"></script>
+<link rel="stylesheet" href="https://cdn.rawgit.com/toopay/bootstrap-markdown/master/css/bootstrap-markdown.min.css" />
+  <link rel="stylesheet" href="style.css" />
 <form method="post" action="/Summery">
 <div class="form-group row">
     <label class="col-sm-2 col-form-label"> Title :</label>

@@ -20,6 +20,9 @@ public class User implements UserDetails {
     private String DateReg;
     private String DateLastSeen;
 
+    private String email;
+    private String activationCode;
+
     @ElementCollection(targetClass=Rol.class, fetch=FetchType.EAGER)
     @CollectionTable(name="user_role", joinColumns = @JoinColumn(name="user_id"))
     @Enumerated(EnumType.STRING)
@@ -72,5 +75,21 @@ public class User implements UserDetails {
     public void setDateLastSeen(Date dateLastSeen) {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy HH-mm-ss");
         this.DateLastSeen=simpleDateFormat.format(dateLastSeen);
+    }
+
+    public String getActivationCode() {
+        return activationCode;
+    }
+
+    public void setActivationCode(String activationCode) {
+        this.activationCode = activationCode;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }

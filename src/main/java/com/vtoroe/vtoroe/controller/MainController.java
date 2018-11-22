@@ -42,16 +42,16 @@ public class MainController {
                       @RequestParam String number,
                       @RequestParam String tags,
                       @RequestParam String text,
-                      Map<String,Object> model){
-        Summ summ=new Summ(title,descript,number,tags,text);
+                      Map<String, Object> model) {
+        Summ summ = new Summ(title, descript, number, tags, text);
         summRepo.save(summ);
         Iterable<Summ> summs = summRepo.findAll();
-        model.put("summeries",summs);
+        model.put("summeries", summs);
         return "Summery";
     }
 
-    @GetMapping ("/Summery")
-    public String summery(){
+    @GetMapping("/Summery")
+    public String summery() {
         return "Summery";
     }
 //    @GetMapping ("/User")
@@ -59,22 +59,6 @@ public class MainController {
 //        return "User";
 //    }
 
-
-
-    @GetMapping("/main")
-    public String main(@RequestParam(required = false, defaultValue = "") String filter, Model model) {
-        Iterable<Message> messages = messageRepo.findAll();
-
-        if (filter != null && !filter.isEmpty()) {
-            messages = messageRepo.findByTag(filter);
-        } else {
-            messages = messageRepo.findAll();
-        }
-        model.addAttribute("messages", messages);
-        model.addAttribute("filter", filter);
-
-        return "main";
-    }
 
     @PostMapping("/main")
     public String add(
@@ -89,6 +73,24 @@ public class MainController {
         return "main";
     }
 
+
+
+    @PostMapping("UserPage")
+    public String filter(@RequestParam String filter, Map<String, Object> model) {
+         Iterable<Summ> summs;
+           if (filter != null && !filter.isEmpty()) {
+            summs = summRepo.findByTitle(filter);
+        } else{
+             summs=summRepo.findAll();
+        }
+            model.put("summs", summs);
+            return "UserPage";
+        }
+
+
+
+
+
     @PostMapping("/update")
     @ResponseBody
     public String updateActive(@RequestBody List<Long> idUsers,
@@ -97,7 +99,7 @@ public class MainController {
         for (int i = 0; i< idUsers.size(); i++){
             User user = userRepo.getOne(idUsers.get(i));
             if (authoresingUser.getId() == user.getId()) {
-                //SecurityContextHolder.clearContext();
+                SecurityContextHolder.clearContext();
                 settings="1";
             }
             if(user.isActive()==true){
@@ -115,7 +117,7 @@ public class MainController {
         for (int i = 0; i< idUsers.size(); i++){
             User user = userRepo.getOne(idUsers.get(i));
             if (authoresingUser.getId() == user.getId()) {
-               // SecurityContextHolder.clearContext();
+               SecurityContextHolder.clearContext();
                 settings="1";
             }
             if(user.isActive()==false){
@@ -133,27 +135,27 @@ public class MainController {
         for (int i = 0; i< idUsers.size(); i++){
             User user = userRepo.getOne(idUsers.get(i));
             if (authoresingUser.getId() == user.getId()) {
-                //SecurityContextHolder.clearContext();
+                SecurityContextHolder.clearContext();
                 settings="1";
             }
             userRepo.delete(user);
         }
         return settings;
         }
-//    @PostMapping("/deletesummeries")
-//    @ResponseBody
-//    public String updateDeleteSummmeries(@RequestBody List<Long> id,
-//                                         @AuthenticationPrincipal User authoresingSummeries) {
-//        String settings = "1";
-//        for (int i = 0; i< id.size(); i++){
-//            Summ summ = summRepo.findAll(id(i));
-//            if (authoresingSummeries.getId() == summ.getIdSumm()) {
-//                //SecurityContextHolder.clearContext();
-//                settings="2";
-//            }
-//            summRepo.delete(summ);
-//        }
-//        return settings;
-//    }
+    @PostMapping("/deletesummeries")
+    @ResponseBody
+    public String updateDeleteSummmeries(@RequestBody List<Long> id,
+                                         @AuthenticationPrincipal User authoresingSummeries) {
+        String settings = "1";
+        for (int i = 0; i< id.size(); i++){
+            Summ summ = summRepo.getOne(id.get(i));
+            if (authoresingSummeries.getId() == summ.getId()) {
+                //SecurityContextHolder.clearContext();
+                settings="2";
+            }
+            summRepo.delete(summ);
+        }
+        return settings;
+    }
 }
 

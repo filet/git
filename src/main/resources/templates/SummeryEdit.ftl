@@ -20,6 +20,7 @@
     </div>
     <#--<input type="text" name="text" value="${summ.text}" size="50%">-->
     <input class="form-control" type="hidden" value="${summ.id}" name="summId" size="50%">
+    <#--<a href="/user/User">Return</a>-->
 </form>
     <#--<input type="hidden" value="${user.id}" name="userId">-->
     <#--<button type="submit">Save</button>-->

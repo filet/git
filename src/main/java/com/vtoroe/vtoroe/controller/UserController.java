@@ -51,6 +51,17 @@ public class UserController {
         model.addAttribute("user", user);
         return "User";
     }
+    @PostMapping("/User")
+    public String filterr(@RequestParam String filterr, Map<String, Object> model) {
+        Iterable<Summ> summs;
+        if (filterr != null && !filterr.isEmpty()) {
+            summs = summRepo.findByTitle(filterr);
+        } else{
+            summs=summRepo.findAll();
+        }
+        model.put("summs", summs);
+        return "User";
+    }
 
     @PostMapping
     public String userSave(

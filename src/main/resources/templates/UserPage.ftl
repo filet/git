@@ -3,8 +3,12 @@
 <meta charset="utf-8">
 
 <@c.page>
-List of summeries
-<form action="/UserPage" method="post">
+List of summaries
+<#--<form action="/UserPage" method="post">-->
+    <form method="post" action="UserPage" class="form-inline my-2 my-lg-2">
+        <input type="text" name="filter" class="form-control mr-sm-2" placeholder="Search"  width="10%">
+        <button type="submit" class="btn btn-primary">Search</button>
+    </form>
 <table class="table table-striped" id="table-set">
 
     <thead>
@@ -69,5 +73,5 @@ List of summeries
     <#--</script>-->
         </tbody>
 </table>
-</form>
+<#--</form>-->
 </@c.page>
