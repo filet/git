@@ -5,10 +5,13 @@ import com.vtoroe.vtoroe.domain.Summ;
 import com.vtoroe.vtoroe.domain.User;
 import com.vtoroe.vtoroe.repos.SummRepo;
 import com.vtoroe.vtoroe.repos.UserRepo;
+import com.vtoroe.vtoroe.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
@@ -19,30 +22,37 @@ import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/user")
+@PreAuthorize("hasAuthority('ADMIN')")
 public class UserController {
     @Autowired
-    private UserRepo userRepo;
-     @Autowired
-     private SummRepo summRepo;
+    private UserService userService;
+    @Autowired
+    private SummRepo summRepo;
 
     @GetMapping
     public String userList(
-            @AuthenticationPrincipal User user,
             Model model) {
-        user.setDateLastSeen(new Date());
-        userRepo.save(user);
-        model.addAttribute("users", userRepo.findAll());
+
+        model.addAttribute("users", userService.findAll());
 
         return "userList";
     }
 
+
+
     @GetMapping("{user}")
-    public String userEditForm(@PathVariable User user, Model model) {
-
-        model.addAttribute("user", user);
+    public String userEditForm(@PathVariable User user, ModelMap model) {
+         model.addAttribute("user", user);
         model.addAttribute("roles", Rol.values());
-
         return "userEdit";
+    }
+    @PostMapping
+    public String userSave(
+            @RequestParam Map<String, String> form,
+            @RequestParam("userId") User user
+    ) {
+        userService.saveUser(user,form);
+        return "redirect:/user";
     }
     @GetMapping("/User/{user}")
     public String userForm(@PathVariable User user, Summ summ, Model model) {
@@ -62,26 +72,19 @@ public class UserController {
         model.put("summs", summs);
         return "User";
     }
-
-    @PostMapping
-    public String userSave(
-            @RequestParam String username,
-            @RequestParam Map<String, String> form,
-            @RequestParam("userId") User user
-    ) {
-        user.setUsername(username);
-        Set<String> roles = Arrays.stream(Rol.values())
-                .map(Rol::name)
-                .collect(Collectors.toSet());
-
-        user.getRoles().clear();
-
-        for (String key : form.keySet()) {
-            if (roles.contains(key)) {
-                user.getRoles().add(Rol.valueOf(key));
-            }
-        }
-        userRepo.save(user);
-        return "redirect:/user";
+    @GetMapping("profile")
+    public String getProfile(Model model,@AuthenticationPrincipal User user){
+        model.addAttribute("username", user.getUsername());
+        model.addAttribute("email", user.getEmail());
+        return "profile";
+    }
+    @PostMapping("profile")
+    public String updateProfile(
+            @AuthenticationPrincipal User user,
+            @RequestParam String password,
+            @RequestParam String email
+    ){
+        userService.updateProfile(user,password,email);
+        return "redirect:/user/profile";
     }
 }

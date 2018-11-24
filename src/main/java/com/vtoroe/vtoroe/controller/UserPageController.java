@@ -1,20 +1,15 @@
 package com.vtoroe.vtoroe.controller;
-import com.vtoroe.vtoroe.domain.Rol;
-import com.vtoroe.vtoroe.domain.User;
+import com.vtoroe.vtoroe.domain.Comment;
+import com.vtoroe.vtoroe.repos.CommentRepo;
 import com.vtoroe.vtoroe.repos.SummRepo;
 import com.vtoroe.vtoroe.domain.Summ;
 import com.vtoroe.vtoroe.repos.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Arrays;
-import java.util.List;
 import java.util.Map;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 @Controller
 public class UserPageController {
@@ -22,10 +17,14 @@ public class UserPageController {
     private SummRepo summRepo;
     @Autowired
     private UserRepo userRepo;
+    @Autowired
+    private CommentRepo commentRepo;
 
     @GetMapping("/UserPage")
-    public String UserPage(Summ summ, Model model) {
+    public String UserPage(Summ summ, Model model, Comment comment) {
         Iterable<Summ> summs = summRepo.findAll();
+        Iterable<Comment> comments=commentRepo.findAll();
+        model.addAttribute("comments",comments);
         model.addAttribute("summs", summs);
         return "UserPage";
     }
@@ -48,7 +47,6 @@ public class UserPageController {
             @RequestParam String title,
             @RequestParam String descript,
             @RequestParam String number,
-            @RequestParam String tags,
             @RequestParam String text,
             @RequestParam Map<String, String> form,
             @RequestParam("summId") Summ summ
@@ -57,7 +55,6 @@ public class UserPageController {
         summ.setTitle(title);
         summ.setDescript(descript);
         summ.setNumber(number);
-        summ.setTags(tags);
         summ.setText(text);
         summRepo.save(summ);
 

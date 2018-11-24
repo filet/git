@@ -4,9 +4,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.text.SimpleDateFormat;
-import java.util.Collection;
-import java.util.Date;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 @Table(name="data")
@@ -27,6 +25,30 @@ public class User implements UserDetails {
     @CollectionTable(name="user_role", joinColumns = @JoinColumn(name="user_id"))
     @Enumerated(EnumType.STRING)
     private Set<Rol> roles;
+
+    @Override
+    public boolean equals(Object o){
+        if(this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return Objects.equals(id,user.id);
+    }
+
+    @ManyToMany
+    @JoinTable(
+            name="Comment",
+            joinColumns = @JoinColumn(name="user_id"),
+            inverseJoinColumns = {@JoinColumn(name="summary_id")}
+    )
+    private List<Summ> summs;
+
+    public List<Summ> getSumms() {
+        return summs;
+    }
+
+    public void setSumms(List<Summ> summs) {
+        this.summs = summs;
+    }
 
     public Long getId() {return id;}
     public void setId(Long id) {this.id = id;}
@@ -92,4 +114,5 @@ public class User implements UserDetails {
     public void setEmail(String email) {
         this.email = email;
     }
+
 }

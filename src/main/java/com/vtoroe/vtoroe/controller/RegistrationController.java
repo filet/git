@@ -1,7 +1,7 @@
 package com.vtoroe.vtoroe.controller;
 
 import com.vtoroe.vtoroe.domain.User;
-import com.vtoroe.vtoroe.service.MailSender;
+
 import com.vtoroe.vtoroe.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -38,8 +38,10 @@ public class RegistrationController {
     public String activate(Model model, @PathVariable String code){
         boolean isActivated=userService.activateUser(code);
         if (isActivated){
+            model.addAttribute("messageType", "success");
             model.addAttribute("message", "User successfully activated");
             }else {
+            model.addAttribute("messageType", "danger");
             model.addAttribute("message","Activation code is not found!");
         }
 

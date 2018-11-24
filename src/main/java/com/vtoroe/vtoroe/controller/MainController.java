@@ -10,15 +10,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.chrono.IsoChronology;
-import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.lang.Long;
+import java.util.Set;
 
 @Controller
 public class MainController {
@@ -40,10 +39,9 @@ public class MainController {
     public String add(@RequestParam String title,
                       @RequestParam String descript,
                       @RequestParam String number,
-                      @RequestParam String tags,
                       @RequestParam String text,
                       Map<String, Object> model) {
-        Summ summ = new Summ(title, descript, number, tags, text);
+        Summ summ = new Summ(title, descript, number, text);
         summRepo.save(summ);
         Iterable<Summ> summs = summRepo.findAll();
         model.put("summeries", summs);
@@ -54,11 +52,17 @@ public class MainController {
     public String summery() {
         return "Summery";
     }
-//    @GetMapping ("/User")
-//    public String user(){
-//        return "User";
-//    }
 
+    @GetMapping("/user-messages/{user}")
+    public String userMessages(@AuthenticationPrincipal User currentUser,
+                          @PathVariable User user,
+                          Model model) {
+        Iterable<Summ> summs = summRepo.findAll();
+        model.addAttribute("users", userRepo.findAll());
+        model.addAttribute("summs",summs);
+        model.addAttribute("isCurrentUser",currentUser.equals(user));
+        return "cabinet";
+    }
 
     @PostMapping("/main")
     public String add(

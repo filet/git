@@ -4,7 +4,6 @@
 
 <@c.page>
 List of users
-
 <table class="table table-striped" id="table-set">
 
     <thead>
@@ -43,11 +42,9 @@ List of users
         }
         function getArrayIdUser(){
             arrayIdUser = [];
-
             $('input:checkbox:checked').each(function(){
                 arrayIdUser.push($(this).val());
             });
-
             return arrayIdUser;
         }
     </script>
@@ -55,7 +52,6 @@ List of users
     <script>
         function onClickBtnDelete(){
             idUsers = getArrayIdUser();
-
             $.ajax({
                 url: '/delete',
                 dataType: 'json',
@@ -85,11 +81,11 @@ List of users
                 success: function(settings){
                     if (settings=="1") {
                         window.location.reload();
-                } else {
-                    document.location.href = "http://localhost:8080/login?logout";
-        }
-                                    }
-                });
+                    } else {
+                        document.location.href = "http://localhost:8080/login?logout";
+                    }
+                }
+            });
         }
     </script>
     <button onclick="onClickBtnUnBlock()">UnBlock</button>
@@ -111,7 +107,7 @@ List of users
                 }
             });
         }
-        </script>
+    </script>
     </tbody>
 </table>
 </@c.page>
