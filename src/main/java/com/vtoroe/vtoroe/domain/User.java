@@ -7,7 +7,6 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 @Entity
-@Table(name="data")
 public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
@@ -18,6 +17,7 @@ public class User implements UserDetails {
     private String DateReg;
     private String DateLastSeen;
 
+
     private String email;
     private String activationCode;
 
@@ -25,6 +25,24 @@ public class User implements UserDetails {
     @CollectionTable(name="user_role", joinColumns = @JoinColumn(name="user_id"))
     @Enumerated(EnumType.STRING)
     private Set<Rol> roles;
+
+//    @ElementCollection(targetClass=Summ.class, fetch=FetchType.EAGER)
+//    @CollectionTable(name="summer_user", joinColumns = @JoinColumn(name="user_id"))
+//    @Enumerated(EnumType.STRING)
+//    private List<Summ> summ;
+
+//    @Id
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    @Column(name = "user_id", unique = true, nullable = false)
+//    private List<Summ> summ;
+
+    public List<Summ> getSumm() {
+        return summ;
+    }
+
+    public void setSumm(List<Summ> summ) {
+        this.summ = summ;
+    }
 
     @Override
     public boolean equals(Object o){
@@ -34,21 +52,62 @@ public class User implements UserDetails {
         return Objects.equals(id,user.id);
     }
 
-    @ManyToMany
-    @JoinTable(
-            name="Comment",
-            joinColumns = @JoinColumn(name="user_id"),
-            inverseJoinColumns = {@JoinColumn(name="summary_id")}
-    )
-    private List<Summ> summs;
+//    @ManyToMany
+//    @JoinTable(
+//            name="Comment",
+//            joinColumns = @JoinColumn(name="user_id"),
+//            inverseJoinColumns = {@JoinColumn(name="summary_id")}
+//    )
+//    private List<Summ> summs;
 
-    public List<Summ> getSumms() {
-        return summs;
+//    @ManyToMany
+//    @JoinTable(
+//            name="Rating",
+//            joinColumns = @JoinColumn(name="user_id"),
+//            inverseJoinColumns = {@JoinColumn(name="summary_id")}
+//    )
+//    private List<Summ> summs1;
+
+    @OneToMany(cascade = CascadeType.ALL,mappedBy = "user")
+    private List<Summ> summ;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+    private List<Comment> comments;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+    private List<Rating> ratings;
+
+    public List<Rating> getRatings() {
+        return ratings;
     }
 
-    public void setSumms(List<Summ> summs) {
-        this.summs = summs;
+    public void setRatings(List<Rating> ratings) {
+        this.ratings = ratings;
     }
+
+    public List<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<Comment> comments) {
+        this.comments = comments;
+    }
+//
+//    public List<Summ> getSumms1() {
+//        return summs1;
+//    }
+//
+//    public void setSumms1(List<Summ> summs1) {
+//        this.summs1 = summs1;
+//    }
+
+//    public List<Summ> getSumms() {
+//        return summs;
+//    }
+//
+//    public void setSumms(List<Summ> summs) {
+//        this.summs = summs;
+//    }
 
     public Long getId() {return id;}
     public void setId(Long id) {this.id = id;}

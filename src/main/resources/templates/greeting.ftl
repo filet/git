@@ -1,7 +1,12 @@
 <#import "parts/common.ftl" as c>
+<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 <meta charset="utf-8">
 <@c.page>
-<h4>Summaries</h4>
+<body class="bg-light">
+
+<h1 class="jumbotron-heading">Summaries</h1>
 <p></p>
-<div><a href="/UserPage">List of summaries</a></div>
+
+<a href="/UserPage"><u>List of summaries</u></a>
+</body>
 </@c.page>

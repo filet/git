@@ -1,11 +1,7 @@
 package com.vtoroe.vtoroe.controller;
-import com.vtoroe.vtoroe.domain.Message;
+import com.vtoroe.vtoroe.domain.*;
 
-import com.vtoroe.vtoroe.domain.Summ;
-import com.vtoroe.vtoroe.domain.User;
-import com.vtoroe.vtoroe.repos.MessageRepo;
-import com.vtoroe.vtoroe.repos.SummRepo;
-import com.vtoroe.vtoroe.repos.UserRepo;
+import com.vtoroe.vtoroe.repos.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -13,26 +9,30 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.lang.Long;
-import java.util.Set;
 
 @Controller
 public class MainController {
-    @Autowired
-    private MessageRepo messageRepo;
 
     @Autowired
     private UserRepo userRepo;
 
     @Autowired
     private SummRepo summRepo;
+    @Autowired
+    private TagsRepo tagsRepo;
 
-    @GetMapping("/")
-    public String greeting(Map<String, Object> model) {
-        return "greeting";
+    @Autowired
+    private CommentRepo commentRepo;
+
+    @GetMapping("/home")
+    public String Neaut(Summ summ, Model model) {
+        List<Summ> summs=summRepo.findAll();
+        Summ[] summs1=summs.toArray(new Summ[summs.size()]);
+        Arrays.sort(summs1);
+        model.addAttribute("summs1",summs1);
+        return "Neaut";
     }
 
     @PostMapping("/Summery")
@@ -40,9 +40,25 @@ public class MainController {
                       @RequestParam String descript,
                       @RequestParam String number,
                       @RequestParam String text,
+                      @RequestParam String tags,
+                      @AuthenticationPrincipal User user,
                       Map<String, Object> model) {
-        Summ summ = new Summ(title, descript, number, text);
+        List<Tags> tagsList = new ArrayList<>();
+        String[] arrayTags = tags.toLowerCase().trim().split(",");
+        for (int i = 0; i< arrayTags.length; i++){
+            tagsList.add(new Tags(arrayTags[i]));
+            Tags tags1 = tagsRepo.findByTags(tagsList.get(i).getTags());
+            if (tags1 == null) {
+                tagsRepo.save(tagsList.get(i));
+            }
+        }
+
+        Summ summ = new Summ(title, descript, number, text, tagsList);
+        summ.setDateRegistr(new Date());
+
+        summ.setUser(user);
         summRepo.save(summ);
+
         Iterable<Summ> summs = summRepo.findAll();
         model.put("summeries", summs);
         return "Summery";
@@ -53,45 +69,29 @@ public class MainController {
         return "Summery";
     }
 
-    @GetMapping("/user-messages/{user}")
-    public String userMessages(@AuthenticationPrincipal User currentUser,
-                          @PathVariable User user,
-                          Model model) {
-        Iterable<Summ> summs = summRepo.findAll();
-        model.addAttribute("users", userRepo.findAll());
-        model.addAttribute("summs",summs);
-        model.addAttribute("isCurrentUser",currentUser.equals(user));
-        return "cabinet";
-    }
-
-    @PostMapping("/main")
-    public String add(
-            @AuthenticationPrincipal User user,
-            @RequestParam String text,
-            @RequestParam String tag, Map<String, Object> model
-    ) {
-        Message message = new Message(text, tag, user);
-        messageRepo.save(message);
-        Iterable<Message> messages = messageRepo.findAll();
-        model.put("messages", messages);
-        return "main";
-    }
-
-
-
-    @PostMapping("UserPage")
+    @PostMapping("/home")
     public String filter(@RequestParam String filter, Map<String, Object> model) {
-         Iterable<Summ> summs;
+         Iterable<Summ> summs1;
            if (filter != null && !filter.isEmpty()) {
-            summs = summRepo.findByTitle(filter);
+            summs1 = summRepo.findByTitle(filter);
         } else{
-             summs=summRepo.findAll();
+             summs1=summRepo.findAll();
         }
-            model.put("summs", summs);
-            return "UserPage";
+            model.put("summs1", summs1);
+            return "Neaut";
         }
 
-
+    @PostMapping("/UserPage/Filt")
+    public String filterr(@RequestParam String filterr, Map<String, Object> model) {
+        Iterable<Summ> summs1;
+        if (filterr != null && !filterr.isEmpty()) {
+            summs1 = summRepo.findByTitle(filterr);
+        } else{
+            summs1=summRepo.findAll();
+        }
+        model.put("summs", summs1);
+        return "UserPage";
+    }
 
 
 
@@ -154,7 +154,7 @@ public class MainController {
         for (int i = 0; i< id.size(); i++){
             Summ summ = summRepo.getOne(id.get(i));
             if (authoresingSummeries.getId() == summ.getId()) {
-                //SecurityContextHolder.clearContext();
+                SecurityContextHolder.clearContext();
                 settings="2";
             }
             summRepo.delete(summ);

@@ -3,13 +3,21 @@
 <meta charset="utf-8">
 
 <@c.page>
-List of users
-<table class="table table-striped" id="table-set">
-
+<body class="bg-light">
+<div class="list-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+<h1 class="display-4">
+    List of users</h1>
+    <p></p>
+    <p class="lead"> <button class="btn btn-outline-primary" onclick="onClickBtnDelete()">Delete</button>
+    <button onclick="onClickBtnBlock()" class="btn btn-outline-primary">Block</button>
+        <button onclick="onClickBtnUnBlock()" class="btn btn-outline-primary">UnBlock</button></p>
+</div>
+    <table class="table table-striped" id="table-set">
+    <caption>List of users</caption>
     <thead>
     <tr>
         <th>
-            <button onclick="onClickBtnAll()">All</button>
+            <button class="btn btn-outline-primary" onclick="onClickBtnAll()">All</button>
         </th>
         <th scope="col">Name</th>
         <th scope="col">Role</th>
@@ -18,7 +26,7 @@ List of users
         <th scope="col">DateLastSeen</th>
         <th scope="col">Active</th>
         <th scope="col">Post</th>
-        <th></th>
+
     </tr>
     </thead>
     <tbody>
@@ -48,7 +56,7 @@ List of users
             return arrayIdUser;
         }
     </script>
-    <button onclick="onClickBtnDelete()">Delete</button>
+
     <script>
         function onClickBtnDelete(){
             idUsers = getArrayIdUser();
@@ -68,7 +76,7 @@ List of users
             });
         }
     </script>
-    <button onclick="onClickBtnBlock()">Block</button>
+
     <script>
         function onClickBtnBlock(){
             idUsers = getArrayIdUser();
@@ -88,7 +96,7 @@ List of users
             });
         }
     </script>
-    <button onclick="onClickBtnUnBlock()">UnBlock</button>
+
     <script>
         function onClickBtnUnBlock(){
             idUsers = getArrayIdUser();
@@ -110,4 +118,5 @@ List of users
     </script>
     </tbody>
 </table>
+</body>
 </@c.page>
