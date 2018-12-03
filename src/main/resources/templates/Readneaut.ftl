@@ -11,12 +11,22 @@
 
     <br><em>Description:</em> ${summ.descript}
     <br><em>Cpeciality:</em> ${summ.number}
-     <#--<br>${summ.tags}</i>-->
     <p></p>
     <br>
-        ${summ.text}
+        <script type="text/javascript">
+            $(document).ready(function() {
+               var html=SimpleMDE.prototype.markdown("${summ.text}");
+               document.getElementById("text").innerHTML = html;
+            })
+                 </script>
+        <div id="text"></div>
     <p></p>
     <br>
+        <div>
+                   <#if summ.filename??>
+                       <img src="/img/${summ.filename}">
+                   </#if>
+        </div>
     <p></p>
     <br>
     <a href="/home"><u>Return</u></a>

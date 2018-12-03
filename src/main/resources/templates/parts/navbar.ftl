@@ -10,10 +10,10 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
             <form class="form-inline my-2">
-
-            <li class="nav-item">
-                <a class="nav-link" href="/user" onclick="ga('send','event','Navbar','Community links','Docs');">User list </a>
+                        <li class="nav-item">
+                <a class="nav-link" href="/user">User list </a>
             </li>
+
                  <li class="nav-item">
                 <a class="nav-link" href="/home">Home </a>
             </li>

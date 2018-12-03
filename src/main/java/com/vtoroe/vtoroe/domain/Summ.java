@@ -3,11 +3,9 @@ package com.vtoroe.vtoroe.domain;
 import javax.persistence.*;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
-@Entity // This tells Hibernate to make a table out of this class
+@Entity
 public class Summ implements Comparable<Summ>{
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
@@ -17,7 +15,7 @@ public class Summ implements Comparable<Summ>{
     private String number;
     private String text;
     private String DateRegistr;
-//    private String filename;
+    private String filename;
 
     @ManyToMany
     @JoinTable(
@@ -27,21 +25,6 @@ public class Summ implements Comparable<Summ>{
     )
     private List<Tags> tags;
 
-//    @ManyToMany
-//    @JoinTable(
-//            name="Comment",
-//            joinColumns = @JoinColumn(name="summary_id"),
-//            inverseJoinColumns = {@JoinColumn(name="id")}
-//    )
-//    private List<Comment> comments;
-
-//    @ManyToMany
-//    @JoinTable(
-//            name="Rating",
-//            joinColumns = @JoinColumn(name="summary_id"),
-//            inverseJoinColumns = {@JoinColumn(name="id")}
-//    )
-//    private List<Rating> ratings;
 
     @ManyToOne
     @JoinColumn (name="user",referencedColumnName = "id")
@@ -96,17 +79,6 @@ public class Summ implements Comparable<Summ>{
         this.ratings = ratings;
     }
 
-//    public List<Comment> getComments() {
-//        return comments;
-//    }
-//
-//    public void setComments(List<Comment> comments) {
-//        this.comments = comments;
-//    }
-    //    public Summ(List<User> users) {
-//        this.users = users;
-//    }
-
     public List<Tags> getTags() {
         return tags;
     }
@@ -114,26 +86,16 @@ public class Summ implements Comparable<Summ>{
     public void setTags(List<Tags> tags) {
         this.tags = tags;
     }
-//    public List<User> getUsers() {
-//        return users;
-//    }
-
-//    public void setUsers(List<User> users) {
-//        this.users = users;
-//    }
 
     public Summ() {
     }
 
-    public Summ(String title, String descript, String number,String text, List<Tags> tags) {
+    public Summ(String title, String descript, String number,String text) {
         this.title = title;
         this.descript = descript;
         this.number = number;
         this.text = text;
-        this.tags = tags;
     }
-
-
 
     public Long getId() {
         return id;
@@ -184,13 +146,17 @@ public class Summ implements Comparable<Summ>{
         this.DateRegistr=simpleDateFormat.format(dateRegistr);
     }
 
-//    public String getFilename() {
-//        return filename;
-//    }
-//
-//    public void setFilename(String filename) {
-//        this.filename = filename;
-//    }
+    public String getFilename() {
+        return filename;
+    }
+
+    public void setFilename(String filename) {
+        this.filename = filename;
+    }
+
+    public void addComment(Comment comment){
+        this.comment.add(comment);
+    }
 
 
     @Override

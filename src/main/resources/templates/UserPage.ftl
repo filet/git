@@ -8,7 +8,7 @@
     List of summaries</h1>
 
     <form method="post" action="/UserPage/Filt" class="form-inline my-2 my-lg-2">
-        <input type="text" name="filterr" class="form-control mr-sm-2" placeholder="Search"  width="10%">
+        <input type="text" name="filterr" class="form-control mr-sm-2" placeholder="Search"  size="60%">
         <button type="submit" class="btn btn-primary">Search</button>
     </form>
 <table class="table table-striped" id="table-set">
@@ -19,9 +19,7 @@
         <th scope="col">Descript</th>
         <th scope="col">Number</th>
         <th scope="col">Tags</th>
-        <th scope="col">Text</th>
-            <th scope="col">Date</th>
-        <th scope="col">Rate</th>
+
 
     </tr>
     </thead>
@@ -39,21 +37,6 @@
                 No tags
             </#list>
         </td>
-        <td>${s.text}</td>
-            <td>${s.dateRegistr}</td>
-        <td>
-                <a href="/search?">${s.ratings} </a>
-            <#--<#list comments as com>-->
-                <#--<a href="/search">${com.text} </a>-->
-            <#--<#else >-->
-                <#--No com-->
-            <#--</#list>-->
-        </td>
-            <#--<td>-->
-                  <#--<#list s.comment as comment>-->
-                      <#--Text:${comment.text}-->
-                  <#--</#list>-->
-            <#--</td>-->
     </tr>
     </#list>
         </tbody>

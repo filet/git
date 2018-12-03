@@ -1,10 +1,11 @@
 package com.vtoroe.vtoroe.domain;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
-@Entity // This tells Hibernate to make a table out of this class
+
+@Entity
 @Table(name="tags")
 public class Tags {
     @Id
@@ -41,5 +42,10 @@ public class Tags {
 
     public void setTags(String tags) {
         this.tags = tags;
+        this.summs = new ArrayList<>();
+    }
+
+    public void addSumm(Summ summ) {
+        this.summs.add(summ);
     }
 }

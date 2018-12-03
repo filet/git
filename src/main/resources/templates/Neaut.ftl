@@ -4,14 +4,17 @@
 
 <@c.page>
 <body class="bg-light">
-<div class="mb-1"><h1 class="h3 mb-3 font-weight-normal">
-     List of summaries</h1>
+<div class="mb-1"><h1 class="h3 mb-3 font-weight-normal text-center">
+     List of summaries</h1></div>
 
-
-<form method="post" action="/home" class="form-inline my-2 my-lg-2">
-    <input type="text" name="filter" class="form-control mr-sm-2" placeholder="Search"  width="10%">
-    <button type="submit" class="btn btn-primary">Search</button>
-</form>
+<div class="text-center">
+    <#list summs1 as s>
+           <#list s.tags as tag>
+        <a href="/home/${s.id}" style="font-size:18px;">${tag.tags} </a>
+    </#list>
+    </#list>
+    </div>
+<br>
 <table class="table table-striped" id="table-set">
 
     <thead>
@@ -20,8 +23,7 @@
         <th scope="col">Descript</th>
         <th scope="col">Number</th>
         <th scope="col">Tags</th>
-        <th scope="col">Text</th>
-        <th scope="col">Rating</th>
+        <th scope="col"></th>
     </tr>
     </thead>
     <tbody>
@@ -38,9 +40,7 @@
             No tags
         </#list>
         </td>
-        <td>${s.text}</td>
         <td>
-            ${s.ratings}
         </td>
     </tr>
     </#list>

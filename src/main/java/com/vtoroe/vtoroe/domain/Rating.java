@@ -8,7 +8,7 @@ public class Rating {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private int rating;
+    private double rating;
 
 
     @ManyToOne
@@ -38,36 +38,17 @@ public class Rating {
     public Rating() {
     }
 
-    public Rating(int rating) {
+    public Rating(double rating, User user, Summ summ) {
         this.rating = rating;
+        this.user = user;
+        this.summ = summ;
     }
 
-
-//    public Rating(String summary_id) {
-//        this.summary_id = summary_id;
-//    }
-//
-//    public String getSummary_id() {
-//        return summary_id;
-//    }
-//
-//    public void setSummary_id(String summary_id) {
-//        this.summary_id = summary_id;
-//    }
-//
-//    public String getUser_id() {
-//        return user_id;
-//    }
-//
-//    public void setUser_id(String user_id) {
-//        this.user_id = user_id;
-//    }
-
-    public int getRating() {
+    public double getRating() {
         return rating;
     }
 
-    public void setRating(int rating) {
+    public void setRating(double rating) {
         this.rating = rating;
     }
 

@@ -25,16 +25,9 @@ public class User implements UserDetails {
     @CollectionTable(name="user_role", joinColumns = @JoinColumn(name="user_id"))
     @Enumerated(EnumType.STRING)
     private Set<Rol> roles;
-
-//    @ElementCollection(targetClass=Summ.class, fetch=FetchType.EAGER)
-//    @CollectionTable(name="summer_user", joinColumns = @JoinColumn(name="user_id"))
-//    @Enumerated(EnumType.STRING)
-//    private List<Summ> summ;
-
-//    @Id
-//    @GeneratedValue(strategy = GenerationType.IDENTITY)
-//    @Column(name = "user_id", unique = true, nullable = false)
-//    private List<Summ> summ;
+    public boolean isAdmin(){
+        return roles.contains(Rol.ADMIN);
+    }
 
     public List<Summ> getSumm() {
         return summ;
@@ -51,22 +44,14 @@ public class User implements UserDetails {
         User user = (User) o;
         return Objects.equals(id,user.id);
     }
+    @ManyToMany
+    @JoinTable(
+            name="Likes",
+            joinColumns = @JoinColumn(name="comment_id"),
+            inverseJoinColumns = {@JoinColumn(name="user_id")}
+    )
+    private List<Comment> commentss;
 
-//    @ManyToMany
-//    @JoinTable(
-//            name="Comment",
-//            joinColumns = @JoinColumn(name="user_id"),
-//            inverseJoinColumns = {@JoinColumn(name="summary_id")}
-//    )
-//    private List<Summ> summs;
-
-//    @ManyToMany
-//    @JoinTable(
-//            name="Rating",
-//            joinColumns = @JoinColumn(name="user_id"),
-//            inverseJoinColumns = {@JoinColumn(name="summary_id")}
-//    )
-//    private List<Summ> summs1;
 
     @OneToMany(cascade = CascadeType.ALL,mappedBy = "user")
     private List<Summ> summ;
@@ -92,23 +77,6 @@ public class User implements UserDetails {
     public void setComments(List<Comment> comments) {
         this.comments = comments;
     }
-//
-//    public List<Summ> getSumms1() {
-//        return summs1;
-//    }
-//
-//    public void setSumms1(List<Summ> summs1) {
-//        this.summs1 = summs1;
-//    }
-
-//    public List<Summ> getSumms() {
-//        return summs;
-//    }
-//
-//    public void setSumms(List<Summ> summs) {
-//        this.summs = summs;
-//    }
-
     public Long getId() {return id;}
     public void setId(Long id) {this.id = id;}
     public String getUsername() {return username;}

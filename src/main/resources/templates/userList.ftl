@@ -16,8 +16,7 @@
     <caption>List of users</caption>
     <thead>
     <tr>
-        <th>
-            <button class="btn btn-outline-primary" onclick="onClickBtnAll()">All</button>
+        <th scope="col">#
         </th>
         <th scope="col">Name</th>
         <th scope="col">Role</th>
@@ -25,7 +24,6 @@
         <th scope="col">DateReg</th>
         <th scope="col">DateLastSeen</th>
         <th scope="col">Active</th>
-        <th scope="col">Post</th>
 
     </tr>
     </thead>
@@ -41,7 +39,6 @@
         <td>${user.dateReg}</td>
         <td>${user.dateLastSeen}</td>
         <td>${user.active?c}</td>
-        <td>${user.email}</td>
     </tr>
     </#list>
     <script>

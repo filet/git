@@ -28,10 +28,11 @@
     </#if>
     <#if !isRegisterForm>
     <label class="col-sm-5 col-form-label"></label>
-        <a href="/registration">Add new user</a></#if>
-    <#if isRegisterForm>
+        <a href="/registration" class="btn btn-outline-primary">Add new user</a></#if>
+     <#if isRegisterForm>
     <label class="col-sm-7 col-form-label"></label>
-        <a href="/registration"></a></#if>
+        <a href="/registration"></a>
+     </#if>
     <button class="btn btn-primary" type="submit">
     <#if !isRegisterForm>Sign In</#if>
 

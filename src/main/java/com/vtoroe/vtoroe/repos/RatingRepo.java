@@ -2,7 +2,6 @@ package com.vtoroe.vtoroe.repos;
 
 
 import com.vtoroe.vtoroe.domain.Rating;
-import com.vtoroe.vtoroe.domain.Summ;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

@@ -1,6 +1,8 @@
 package com.vtoroe.vtoroe.domain;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name="Comment")
@@ -22,10 +24,26 @@ public class Comment {
         this.summ = summ;
     }
 
+    @ManyToMany
+    @JoinTable(
+            name="Likes",
+            joinColumns = @JoinColumn(name="comment_id"),
+            inverseJoinColumns = {@JoinColumn(name="user_id")}
+    )
+    private Set<User> likes = new HashSet<>();
+
+    public Set<User> getLikes() {
+        return likes;
+    }
+
+    public void setLikes(Set<User> likes) {
+        this.likes = likes;
+    }
 
     @ManyToOne
     @JoinColumn(name = "user", referencedColumnName = "id")
     private User user;
+
 
     public User getUser() {
         return user;
